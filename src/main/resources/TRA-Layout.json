@@ -1,0 +1,32 @@
+{
+  "datetime": {
+    "$resolver": "timestamp",
+    "pattern": {
+      "format": "yyyy-MM-dd HH:mm:ss.ms"
+    }
+  },
+  "level": {
+    "$resolver": "level",
+    "field": "name"
+  },
+  "user": {
+    "$resolver": "pattern",
+    "pattern": "%X{username}",
+    "stackTraceEnabled": false
+  },
+  "thread": {
+    "$resolver": "thread",
+    "field": "name"
+  },
+  "description": {
+    "$resolver": "message",
+    "stringified": true
+  },
+  "excepcion": {
+    "$resolver": "exception",
+    "field": "stackTrace",
+    "stackTrace": {
+      "stringified": true
+    }
+  }
+}

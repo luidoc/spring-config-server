@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <Properties>
+        <!-- Ruta base de logs de la app -->
+        <Property name="codapp">spring-config-server</Property>
+        <Property name="path">c:/temp</Property>
+        <Property name="server">test</Property>
+        <Property name="logLevel">DEBUG</Property>
+        <Property name="fileSize">200MB</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %-5p [%t] %m %ex%n"/>
+        </Console>
+        <RollingFile name="ERROR-JSON" fileName="${path}/${server}-ERR_${codapp}.json" filePattern="${path}/${server}-ERR_${codapp}-%d{yyyyMMdd}-%i.json.gz">
+            <JsonTemplateLayout eventTemplateUri="classpath:ERR-Layout.json"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="${fileSize}" />
+            </Policies>
+        </RollingFile>
+        <RollingFile name="TRA-JSON" fileName="${path}/${server}-TRA_${codapp}.json" filePattern="${path}/${server}-TRA_${codapp}-%d{yyyyMMdd}-%i.json.gz">
+            <JsonTemplateLayout eventTemplateUri="classpath:TRA-Layout.json"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="${fileSize}" />
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.springframework" level="${logLevel}">
+            <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="ERROR-JSON" level="warn" />
+        </Logger>
+        <Root level="${logLevel}">
+            <AppenderRef ref="TRA-JSON"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
