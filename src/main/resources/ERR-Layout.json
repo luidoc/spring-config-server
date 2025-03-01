@@ -9,10 +9,11 @@
     "pattern": "%X{username}",
     "stackTraceEnabled": false
   },
-  "datetime": "timestamp",
-    "pattern": {
-      "format": "yyyy-MM-dd HH:mm:ss.ms"
-    }
+  "datetime": {
+     "$resolver": "timestamp",
+     "pattern": {
+       "format": "yyyy-MM-dd HH:mm:ss.ms"
+     }
   },
   "level": {
     "$resolver": "pattern",
