@@ -10,10 +10,10 @@
     "stackTraceEnabled": false
   },
   "datetime": {
-     "$resolver": "timestamp",
-     "pattern": {
-       "format": "yyyy-MM-dd HH:mm:ss.ms"
-     }
+    "$resolver": "timestamp",
+    "pattern": {
+      "format": "yyyy-MM-dd HH:mm:ss.ms"
+    }
   },
   "level": {
     "$resolver": "pattern",
@@ -25,7 +25,6 @@
     "pattern": "%X{codigoError}",
     "stackTraceEnabled": false
   },
-
   "description": {
     "$resolver": "exception",
     "field": "message",

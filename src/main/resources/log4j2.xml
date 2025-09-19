@@ -14,18 +14,20 @@
         <Console name="STDOUT" target="SYSTEM_OUT">
             <PatternLayout pattern="%d %-5p [%t] %m %ex%n"/>
         </Console>
-        <RollingFile name="ERROR-JSON" fileName="${path}/${server}-ERR_${codapp}.json" filePattern="${path}/${server}-ERR_${codapp}-%d{yyyyMMdd}-%i.json.gz">
+        <RollingFile name="ERROR-JSON" fileName="${path}/${server}-ERR_${codapp}.json"
+                     filePattern="${path}/${server}-ERR_${codapp}-%d{yyyyMMdd}-%i.json.gz">
             <JsonTemplateLayout eventTemplateUri="classpath:ERR-Layout.json"/>
             <Policies>
-                <TimeBasedTriggeringPolicy />
-                <SizeBasedTriggeringPolicy size="${fileSize}" />
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${fileSize}"/>
             </Policies>
         </RollingFile>
-        <RollingFile name="TRA-JSON" fileName="${path}/${server}-TRA_${codapp}.json" filePattern="${path}/${server}-TRA_${codapp}-%d{yyyyMMdd}-%i.json.gz">
+        <RollingFile name="TRA-JSON" fileName="${path}/${server}-TRA_${codapp}.json"
+                     filePattern="${path}/${server}-TRA_${codapp}-%d{yyyyMMdd}-%i.json.gz">
             <JsonTemplateLayout eventTemplateUri="classpath:TRA-Layout.json"/>
             <Policies>
-                <TimeBasedTriggeringPolicy />
-                <SizeBasedTriggeringPolicy size="${fileSize}" />
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${fileSize}"/>
             </Policies>
         </RollingFile>
 
@@ -33,8 +35,8 @@
 
     <Loggers>
         <Logger name="org.springframework" level="${logLevel}">
-            <AppenderRef ref="STDOUT" />
-            <AppenderRef ref="ERROR-JSON" level="warn" />
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="ERROR-JSON" level="warn"/>
         </Logger>
         <Root level="${logLevel}">
             <AppenderRef ref="TRA-JSON"/>
