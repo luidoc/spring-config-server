@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.5</version>
+        <version>4.0.0-M3</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
@@ -17,10 +17,10 @@
     <name>spring-config-server</name>
     <description>Testing spring cloud server</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-cloud.version>2025.1.0-M2</spring-cloud.version>
-        <spring-cloud-config-server.version>5.0.0-M2</spring-cloud-config-server.version>
+        <spring-cloud.version>2025.1.0-M3</spring-cloud.version>
+        <spring-cloud-config-server.version>5.0.0-M3</spring-cloud-config-server.version>
     </properties>
     <dependencies>
         <dependency>
@@ -130,6 +130,11 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.19.1</version>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
@@ -144,7 +149,7 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>3.4.4</version>
+                <version>3.4.6</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.google.cloud.tools</groupId>
@@ -175,6 +180,7 @@
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
+                <version>0.11.1</version>
             </plugin>
             <plugin>
                 <groupId>org.eclipse.jkube</groupId>
@@ -203,17 +209,21 @@
                     <plugin>
                         <groupId>org.graalvm.buildtools</groupId>
                         <artifactId>native-maven-plugin</artifactId>
+                        <version>0.11.1</version>
                         <extensions>true</extensions>
                         <configuration>
                             <classesDirectory>${project.build.outputDirectory}</classesDirectory>
                             <metadataRepository>
-                                <enabled>true</enabled>
+                                <enabled>false</enabled>
                             </metadataRepository>
-                            <buildArgs>-H:-AddAllFileSystemProviders
-                                -H:+UnlockExperimentalVMOptions
+                            <buildArgs>
+                                <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
+                                <buildArg>-H:-AddAllFileSystemProviders</buildArg>
+                                <buildArg>--initialize-at-run-time=org.bouncycastle.jcajce.provider.drbg.EntropyDaemon</buildArg>
+                                <buildArg>--initialize-at-build-time=org.bouncycastle.jce.provider.BouncyCastleProvider</buildArg>
+                                <buildArg>--initialize-at-run-time=org.apache.logging.log4j,org.apache.logging.slf4j,org.apache.sshd</buildArg>
                             </buildArgs>
                             <skipNativeTests>true</skipNativeTests>
-                            <imageName>${project.artifactId}</imageName>
                             <mainClass>es.luis.config.server.SpringConfigServerApplication</mainClass>
                         </configuration>
                         <executions>
@@ -223,6 +233,9 @@
                                     <goal>compile-no-fork</goal>
                                 </goals>
                                 <phase>package</phase>
+                                <configuration>
+                                    <imageName>${project.artifactId}</imageName>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
