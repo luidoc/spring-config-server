@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.0-M3</version>
+        <version>4.0.0-RC1</version>
         <relativePath/>
         <!-- lookup parent from repository -->
     </parent>
@@ -19,8 +19,8 @@
     <properties>
         <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-cloud.version>2025.1.0-M3</spring-cloud.version>
-        <spring-cloud-config-server.version>5.0.0-M3</spring-cloud-config-server.version>
+        <spring-cloud.version>2025.1.0-M4</spring-cloud.version>
+        <spring-cloud-config-server.version>5.0.0-M4</spring-cloud-config-server.version>
     </properties>
     <dependencies>
         <dependency>
@@ -137,50 +137,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>process-aot</id>
-                        <goals>
-                            <goal>process-aot</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>3.4.6</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.google.cloud.tools</groupId>
-                        <artifactId>jib-native-image-extension-maven</artifactId>
-                        <version>0.1.0</version>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <from>
-                        <image>rockylinux:latest</image>
-                    </from>
-                    <to>
-                        <image>${env.IMAGE_PATH}</image>
-                    </to>
-                    <pluginExtensions>
-                        <pluginExtension>
-                            <implementation>
-                                com.google.cloud.tools.jib.maven.extension.nativeimage.JibNativeImageExtension
-                            </implementation>
-                        </pluginExtension>
-                    </pluginExtensions>
-                    <container>
-                        <appRoot>/app</appRoot>
-                        <entrypoint>${appRoot}/${project.build.finalName}</entrypoint>
-                    </container>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.graalvm.buildtools</groupId>
-                <artifactId>native-maven-plugin</artifactId>
-                <version>0.11.1</version>
             </plugin>
             <plugin>
                 <groupId>org.eclipse.jkube</groupId>
@@ -261,7 +217,7 @@
                                 </platforms>
                             </from>
                             <to>
-                                <image>${env.IMAGE_PATH}</image>
+                                <image>${imagepath}</image>
                             </to>
                             <container>
                                 <ports>
@@ -279,6 +235,51 @@
                                     </properties>
                                 </pluginExtension>
                             </pluginExtensions>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>contenedor</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <version>3.4.6</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <from>
+                                <image>openjdk:25</image>
+                                <platforms>
+                                    <platform>
+                                        <architecture>amd64</architecture>
+                                        <os>linux</os>
+                                    </platform>
+                                </platforms>
+                            </from>
+                            <to>
+                                <image>${imagepath}</image>
+                            </to>
+                            <container>
+                                <ports>
+                                    <port>8888</port>
+                                </ports>
+                                <format>OCI</format>
+                                <mainClass>es.luis.config.server.SpringConfigServerApplication</mainClass>
+                            </container>
                         </configuration>
                     </plugin>
                 </plugins>
