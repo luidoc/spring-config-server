@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://maven.apache.org/POM/4.0.0"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.0-RC1</version>
-        <relativePath/>
+        <version>4.0.0-RC2</version>
+        <relativePath />
         <!-- lookup parent from repository -->
     </parent>
     <groupId>es.luis</groupId>
@@ -19,8 +19,13 @@
     <properties>
         <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-cloud.version>2025.1.0-M4</spring-cloud.version>
-        <spring-cloud-config-server.version>5.0.0-M4</spring-cloud-config-server.version>
+        <spring-cloud.version>2025.1.0-RC1</spring-cloud.version>
+        <spring-cloud-config-server.version>5.0.0-RC1</spring-cloud-config-server.version>
+        
+        <!-- SonarQube properties -->
+        <sonar.organization>luidoc</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.projectKey>spring-config-server</sonar.projectKey>
     </properties>
     <dependencies>
         <dependency>
@@ -141,7 +146,7 @@
             <plugin>
                 <groupId>org.eclipse.jkube</groupId>
                 <artifactId>kubernetes-maven-plugin</artifactId>
-                <version>1.18.1</version>
+                <version>1.18.2</version>
             </plugin>
         </plugins>
     </build>
@@ -175,9 +180,12 @@
                             <buildArgs>
                                 <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
                                 <buildArg>-H:-AddAllFileSystemProviders</buildArg>
-                                <buildArg>--initialize-at-run-time=org.bouncycastle.jcajce.provider.drbg.EntropyDaemon</buildArg>
-                                <buildArg>--initialize-at-build-time=org.bouncycastle.jce.provider.BouncyCastleProvider</buildArg>
-                                <buildArg>--initialize-at-run-time=org.apache.logging.log4j,org.apache.logging.slf4j,org.apache.sshd</buildArg>
+                                <buildArg>
+                                    --initialize-at-run-time=org.bouncycastle.jcajce.provider.drbg.EntropyDaemon</buildArg>
+                                <buildArg>
+                                    --initialize-at-build-time=org.bouncycastle.jce.provider.BouncyCastleProvider</buildArg>
+                                <buildArg>
+                                    --initialize-at-run-time=org.apache.logging.log4j,org.apache.logging.slf4j,org.apache.sshd</buildArg>
                             </buildArgs>
                             <skipNativeTests>true</skipNativeTests>
                             <mainClass>es.luis.config.server.SpringConfigServerApplication</mainClass>
@@ -281,6 +289,37 @@
                                 <mainClass>es.luis.config.server.SpringConfigServerApplication</mainClass>
                             </container>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>coverage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.8.14</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <formats>
+                                        <format>XML</format>
+                                    </formats>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
