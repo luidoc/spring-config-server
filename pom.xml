@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.0-RC2</version>
+        <version>4.0.0</version>
         <relativePath />
         <!-- lookup parent from repository -->
     </parent>
@@ -19,8 +19,8 @@
     <properties>
         <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-cloud.version>2025.1.0-RC1</spring-cloud.version>
-        <spring-cloud-config-server.version>5.0.0-RC1</spring-cloud-config-server.version>
+        <spring-cloud.version>2025.1.0</spring-cloud.version>
+        <spring-cloud-config-server.version>5.0.0</spring-cloud-config-server.version>
         
         <!-- SonarQube properties -->
         <sonar.organization>luidoc</sonar.organization>
