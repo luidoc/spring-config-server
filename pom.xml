@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.1</version>
+        <version>4.0.6</version>
         <relativePath />
         <!-- lookup parent from repository -->
     </parent>
@@ -19,8 +19,8 @@
     <properties>
         <java.version>25</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-cloud.version>2025.1.0</spring-cloud.version>
-        <spring-cloud-config-server.version>5.0.0</spring-cloud-config-server.version>
+        <spring-cloud.version>2025.1.1</spring-cloud.version>
+        <spring-cloud-config-server.version>5.0.2</spring-cloud-config-server.version>
         
         <!-- SonarQube properties -->
         <sonar.organization>luidoc</sonar.organization>
@@ -137,7 +137,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>2.19.1</version>
+                <version>2.21.0</version>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -146,7 +146,7 @@
             <plugin>
                 <groupId>org.eclipse.jkube</groupId>
                 <artifactId>kubernetes-maven-plugin</artifactId>
-                <version>1.18.2</version>
+                <version>1.19.0</version>
             </plugin>
         </plugins>
     </build>
@@ -170,7 +170,7 @@
                     <plugin>
                         <groupId>org.graalvm.buildtools</groupId>
                         <artifactId>native-maven-plugin</artifactId>
-                        <version>0.11.1</version>
+                        <version>1.1.0</version>
                         <extensions>true</extensions>
                         <configuration>
                             <classesDirectory>${project.build.outputDirectory}</classesDirectory>
@@ -206,7 +206,7 @@
                     <plugin>
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
-                        <version>3.4.6</version>
+                        <version>3.5.1</version>
                         <dependencies>
                             <dependency>
                                 <groupId>com.google.cloud.tools</groupId>
@@ -239,7 +239,7 @@
                                         com.google.cloud.tools.jib.maven.extension.nativeimage.JibNativeImageExtension
                                     </implementation>
                                     <properties>
-                                        <imageName>spring-config-server.exe</imageName>
+                                        <imageName>spring-config-server</imageName>
                                     </properties>
                                 </pluginExtension>
                             </pluginExtensions>
@@ -259,7 +259,7 @@
                     <plugin>
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
-                        <version>3.4.6</version>
+                        <version>3.5.1</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
