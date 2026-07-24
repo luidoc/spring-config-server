@@ -181,11 +181,12 @@
                                 <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
                                 <buildArg>-H:-AddAllFileSystemProviders</buildArg>
                                 <buildArg>
-                                    --initialize-at-run-time=org.bouncycastle.jcajce.provider.drbg.EntropyDaemon</buildArg>
+                                    --initialize-at-build-time=org.bouncycastle</buildArg>
                                 <buildArg>
-                                    --initialize-at-build-time=org.bouncycastle.jce.provider.BouncyCastleProvider</buildArg>
-                                <buildArg>
-                                    --initialize-at-run-time=org.apache.logging.log4j,org.apache.logging.slf4j,org.apache.sshd</buildArg>
+                                    --initialize-at-run-time=org.bouncycastle.jcajce.provider.drbg.DRBG$Default,org.bouncycastle.jcajce.provider.drbg.DRBG$NonceAndIV</buildArg>
+                                <buildArg>--initialize-at-run-time=!org.hibernate.validator.internal.util.logging.Log</buildArg>
+                                <buildArg>--initialize-at-run-time=org.apache.logging.log4j,org.apache.logging.slf4j,org.apache.sshd</buildArg>
+                                <buildArg>-H:IncludeResources=.*json$</buildArg>
                             </buildArgs>
                             <skipNativeTests>true</skipNativeTests>
                             <mainClass>es.luis.config.server.SpringConfigServerApplication</mainClass>
